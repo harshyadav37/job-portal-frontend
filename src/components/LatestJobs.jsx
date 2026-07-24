@@ -2,9 +2,11 @@ import React from 'react'
 
 const LatestJobs = () => {
   return (
-    <div>Job Openings</div>
-    // multiple job cards
-    <h1></h1>
+    <div>Job Openings
+          <h1></h1>
+    </div>
+   
+  
   )
 }
 
