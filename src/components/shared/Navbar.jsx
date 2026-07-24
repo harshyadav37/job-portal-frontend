@@ -16,15 +16,15 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex gap-5 font-medium ">
-            <li>Home</li>
-            <li>Jobs</li>
-            <li>Browse</li>
+            <li><Link to='/'>Home</Link> </li>
+            <li> <Link to='/jobs'>Jobs</Link></li>
+            <li> <Link to='/browse'>Browse</Link></li>
           </ul>
         
             {
             !user ?(
                 <div className="flex items-center gap-2"> 
-                <Link to="/login"><Button variant="outline">Login</Button></Link>
+                <Link to="/login"><Button variant="outline"> Login</Button></Link>
                 <Link to="/signup"><Button className="bg-red-300 hover:bg-red-500 " variant="outline">SignUp</Button></Link>  
                     
                 </div>
