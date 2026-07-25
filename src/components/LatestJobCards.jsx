@@ -16,13 +16,22 @@ const LatestJobCards = () => {
         </p>
       </div>
       <div className="flex items-center  gap-2 mt-4">
-        <Badge className="text-blue-700 border border-gray font-bold" variant="ghost">
+        <Badge
+          className="text-blue-700 border border-gray font-bold"
+          variant="ghost"
+        >
           12 Positions
         </Badge>
-        <Badge className="text-[#F83002] border border-gray  font-bold" variant="ghost">
+        <Badge
+          className="text-[#F83002] border border-gray  font-bold"
+          variant="ghost"
+        >
           Part Time
         </Badge>
-        <Badge className="text-[#7209b7] border border-gray  font-bold" variant="ghost">
+        <Badge
+          className="text-[#7209b7] border border-gray  font-bold"
+          variant="ghost"
+        >
           24LPA
         </Badge>
       </div>

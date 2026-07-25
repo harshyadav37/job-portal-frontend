@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../../utlis/authApi";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "@/redux/authSlice";
+import { setLoading, setUser } from "@/redux/authSlice";
 import store from "@/redux/store";
 import { Loader2 } from "lucide-react";
 const Login = () => {
@@ -44,7 +44,8 @@ const Login = () => {
             const res =await loginUser(payload)
             if(res.success){
                 toast.success(res.message);
-                localStorage.setItem("user", JSON.stringify(res.user));
+                // localStorage.setItem("user", JSON.stringify(res.user));
+                dispatch(setUser(res.user))
                 navigate("/");
             } else {
                 toast.error(res.message);
