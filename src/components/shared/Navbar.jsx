@@ -3,10 +3,29 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { LogOut, User2 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
+import { Logout } from "../../../utlis/authApi";
+import { setUser } from "@/redux/authSlice";
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
+  const dispatch =useDispatch();
+  const navigate =useNavigate();
+  const logoutHandler =async()=>{
+    try {
+      const res = await Logout();
+      if(res.success){
+        dispatch(setUser(null));
+        navigate("/login");
+        toast.success(res.message);
+      }
+
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || error.message || "Logout failed");
+    }
+  }
   return (
     <div className="bg-white">
       <div className="flex justify-between items-center mx-auto max-w-7xl h-16 ">
@@ -73,7 +92,7 @@ const Navbar = () => {
                   </div>
                   <div className="flex w-fit items-center gap-2 cursor-pointer">
                     <LogOut />
-                    <Button variant="link">logout</Button>
+                    <Button onClick={logoutHandler} variant="link">logout</Button>
                   </div>
                 </div>
               </PopoverContent>

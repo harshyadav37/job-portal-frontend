@@ -22,3 +22,16 @@ export const loginUser =async(userData)=>{
     const response= await API.post(`/user/login`, userData)
     return response.data;
 }
+
+export const UpdateUser =async(userData)=>{
+    const response =await API.put(`/user/update-profile`, userData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
+    });
+  return response.data;
+}
+export const Logout = async () => {
+  const response = await API.get("/user/logout");
+  return response.data;
+};
