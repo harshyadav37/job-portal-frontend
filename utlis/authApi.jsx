@@ -50,3 +50,13 @@ export const applyJobApplication =async(jobId)=>{
     const response =await API.get(`/application/apply/${jobId}`);
     return response.data;
 }
+
+export const registerCompany =async(companyData)=>{
+    const response= await API.post(`/company/register`,companyData);
+    return response.data;
+}
+  
+export const updateCompany =async(companyId,companyData)=>{
+    const response= await API.put(`/company/update/${companyId}`,companyData);
+    return response.data;
+}
