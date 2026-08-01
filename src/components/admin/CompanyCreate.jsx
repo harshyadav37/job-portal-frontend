@@ -25,10 +25,11 @@ const CompanyCreate = () => {
             const res = await registerCompany(company);
             if (res.success) {
                 const companyId = res?.data?.company?._id || res?.company?._id;
+                const companyName = company.companyName;
                 toast.success(res?.data?.message || res?.message || "Company registered successfully");
                 setCompany({ companyName: "" });
                 if (companyId) {
-                    navigate(`/admin/companies/create/${companyId}`);
+                    navigate(`/admin/companies/create/${companyId}`, { state: { companyName } });
                 }
             }
         } catch (error) {

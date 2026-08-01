@@ -4,9 +4,11 @@ import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import CompaniesTable from './CompaniesTable'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 const Companies = () => {
     const navigate=useNavigate();
+    const [input , setInput] = useState("");
   return (
     <div>
         <Navbar/>
@@ -14,11 +16,14 @@ const Companies = () => {
             <div className='flex items-center justify-between my-5'>
  <Input 
             className='w-fit'
-            placeholder="Filter by name"/>
+            placeholder="Filter by name"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+        />
             <Button onClick={()=>navigate("/admin/companies/create")}>New Company</Button>
             </div>
            
-        <CompaniesTable/>
+        <CompaniesTable filterText={input} />
         </section>
     </div>
   )

@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../shared/Navbar'
 import { Button } from '../ui/button'
 import { ArrowLeft } from 'lucide-react'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
-import { updateCompany } from '../../../utlis/authApi'
+import { updateCompany ,getSingleCompany } from '../../../utlis/authApi'
 import { toast } from 'sonner'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 
 const CompanySetup = () => {
+    const location = useLocation();
     const [input , setInput] = useState({
-        name:"",
+        name: location.state?.companyName || "",
         description:"",
         website:"",
         location:"",
@@ -24,29 +25,38 @@ const CompanySetup = () => {
             [e.target.name]: e.target.value
         })
     }
+    const [fileDataUrl, setFileDataUrl] = useState(null);
+
     const changeFileHandler=(e)=>{
         const file = e.target.files?.[0];
         setInput({
             ...input,
             file
-        })
+        });
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setFileDataUrl(reader.result);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            setFileDataUrl(null);
+        }
     }
   const navigate = useNavigate();
     const submitHandler=async (e)=>{
         e.preventDefault();
         setLoading(true);
         console.log(input);
-        const formData = new FormData();
-        formData.append("name", input.name);
-        formData.append("description", input.description);
-        formData.append("website", input.website);
-        formData.append("location", input.location);
-       
-        if(input.file){
-            formData.append("file", input.file);
-        }
+        const payload = {
+            name: input.name,
+            description: input.description,
+            website: input.website,
+            location: input.location,
+            logo: fileDataUrl,
+        };
         try{
-            const res = await updateCompany(params.id, formData);
+            const res = await updateCompany(params.id, payload);
             if(res.success){
                 toast.success(res.message || "Company updated successfully");
                 navigate("/admin/companies");
@@ -60,6 +70,28 @@ const CompanySetup = () => {
             setLoading(false);
         }
     }
+ const [singleCompany, setSingleCompany] = useState(null);
+    useEffect(()=>{
+        const fetchCompanyData = async () => {
+            try {
+                const res = await getSingleCompany(params.id);
+                if (res.success) {
+                    setSingleCompany(res.company);
+                    setInput(prev => ({
+                        ...prev,
+                        name: prev.name || res.company?.name || "",
+                        description: res.company?.description || "",
+                        website: res.company?.website || "",
+                        location: res.company?.location || "",
+                        file: null,
+                    }));
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchCompanyData();
+    },[params.id]);
   return (
     <div>
         <Navbar/>
@@ -115,12 +147,11 @@ const CompanySetup = () => {
                         <div>
                      <Label>Logo</Label>
                 <Input
+                    name='file'
                     type='file'
                     accept='image/*'
-                   
                     onChange={changeFileHandler}
-                
-        />
+                />
                     </div>
 
 

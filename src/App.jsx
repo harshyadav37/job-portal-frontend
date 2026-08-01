@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./components/shared/Navbar";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import AdminJobs from "./components/admin/AdminJobs";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import Home from "./components/Home";
@@ -55,6 +55,14 @@ const appRouter = createBrowserRouter([
   {
     path:"/admin/companies/create/:id",
     element:<CompanySetup/>
+  },
+  {
+    path:"/admin/companies/:id",
+    element:<CompanySetup/>
+  },
+   {
+    path:"/admin/jobs",
+    element:<AdminJobs/>
   }
 ]);
 const App = () => {

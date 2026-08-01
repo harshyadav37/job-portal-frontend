@@ -57,6 +57,21 @@ export const registerCompany =async(companyData)=>{
 }
   
 export const updateCompany =async(companyId,companyData)=>{
-    const response= await API.put(`/company/update/${companyId}`,companyData);
+    const response= await API.put(`/company/update/${companyId}`,companyData, {
+        headers: {
+            'Content-Type': undefined,
+        },
+    });
+    return response.data;
+}
+
+export const getSingleCompany = async (companyId) => {
+    const response = await API.get(`/company/get/${companyId}`);
+    return response.data;
+};
+
+
+export const getAllCompanies = async () => {
+    const response = await API.get("/company/get");
     return response.data;
 }
