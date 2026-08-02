@@ -30,6 +30,7 @@ fetchJobs();
           <div className="w-[20%]">
             <FilterCard />
           </div>
+          {/* Job Listings */}
 
           {jobs.length <= 0 ? (
             <span>job not found</span>
