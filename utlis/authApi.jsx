@@ -80,3 +80,7 @@ export const getAdminJobs =async()=>{
     const response =await API.get("/job/admin/jobs");
     return response.data;
 }
+export const postJob = async (jobData) => {
+    const response = await API.post("/job/post", jobData);
+    return response.data;
+}

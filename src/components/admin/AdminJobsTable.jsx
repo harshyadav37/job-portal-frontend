@@ -11,7 +11,7 @@ import {
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
-import { getAllCompanies ,getAdminJobs } from "../../../utlis/authApi";
+import { getAdminJobs } from "../../../utlis/authApi";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -42,7 +42,7 @@ const AdminJobsTable = ({ filterText = "" }) => {
 
   const filteredJobs = (AdminJobs || []).filter((job) => {
     const searchText = (filterText || "").toLowerCase();
-    const searchableText = [job.title, job.role, job.location, job.position]
+    const searchableText = [job.title, job.role, job.location, job.position, job.company?.name]
       .filter(Boolean)
       .join(" ")
       .toLowerCase();
@@ -61,6 +61,7 @@ const AdminJobsTable = ({ filterText = "" }) => {
         <TableHeader>
           <TableRow>
             <TableHead>Title</TableHead>
+            <TableHead>Company</TableHead>
             <TableHead>Location</TableHead>
             <TableHead>Date</TableHead>
             <TableHead className="text-right">Action</TableHead>
@@ -69,7 +70,7 @@ const AdminJobsTable = ({ filterText = "" }) => {
         <TableBody>
           {sortedJobs.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={4} className="text-center py-10">
+              <TableCell colSpan={5} className="text-center py-10">
                 No jobs found
               </TableCell>
             </TableRow>
@@ -77,6 +78,7 @@ const AdminJobsTable = ({ filterText = "" }) => {
             sortedJobs.map((job) => (
               <TableRow key={job._id}>
                 <TableCell>{job.title || "N/A"}</TableCell>
+                <TableCell>{job.company?.name || "N/A"}</TableCell>
                 <TableCell>{job.location || "N/A"}</TableCell>
                 <TableCell>{job.updatedAt?.split("T")[0] || "N/A"}</TableCell>
                 <TableCell className="text-right cursor-pointer">
