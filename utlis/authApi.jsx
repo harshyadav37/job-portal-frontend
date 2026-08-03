@@ -74,4 +74,9 @@ export const getSingleCompany = async (companyId) => {
 export const getAllCompanies = async () => {
     const response = await API.get("/company/get");
     return response.data;
+};
+
+export const getAdminJobs =async()=>{
+    const response =await API.get("/job/admin/jobs");
+    return response.data;
 }
