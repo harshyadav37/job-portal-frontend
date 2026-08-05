@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
